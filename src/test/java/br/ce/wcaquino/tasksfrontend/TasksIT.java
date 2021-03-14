@@ -3,22 +3,28 @@ package br.ce.wcaquino.tasksfrontend;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class TasksIT {
 
-    public WebDriver initApplication() {
-        WebDriver driver = new ChromeDriver();
-        driver.navigate().to("http://localhost:8001/tasks/");
+    public WebDriver initApplication() throws MalformedURLException {
+        //WebDriver driver = new ChromeDriver();
+        Capabilities driverCap = DesiredCapabilities.chrome();
+        WebDriver driver = new RemoteWebDriver(new URL(System.getProperty("selenium.grid.hub")), driverCap);
+        driver.navigate().to(System.getProperty("app.baseuri")+"/tasks/");
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         return driver;
     }
 
     @Test
-    public void deveIncluirTarefaComSucesso() {
+    public void deveIncluirTarefaComSucesso() throws MalformedURLException {
 
         WebDriver driver = initApplication();
         try {
@@ -44,7 +50,7 @@ public class TasksIT {
     }
 
     @Test
-    public void naoDeveIncluirTarefaSemDescricao() {
+    public void naoDeveIncluirTarefaSemDescricao() throws MalformedURLException {
 
         WebDriver driver = initApplication();
         try {
@@ -68,7 +74,7 @@ public class TasksIT {
 
 
     @Test
-    public void naoDeveIncluirTarefaSemData() {
+    public void naoDeveIncluirTarefaSemData() throws MalformedURLException {
 
         WebDriver driver = initApplication();
         try {
@@ -91,7 +97,7 @@ public class TasksIT {
     }
 
     @Test
-    public void naoDeveIncluirTarefaDataPassada() {
+    public void naoDeveIncluirTarefaDataPassada() throws MalformedURLException {
 
         WebDriver driver = initApplication();
         try {

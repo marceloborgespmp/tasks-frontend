@@ -61,6 +61,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<parallel>all</parallel>
+					<useUnlimitedThreads>true</useUnlimitedThreads>
+				</configuration>
 				<executions>
 					<execution>
 						<id>integration-test</id>
